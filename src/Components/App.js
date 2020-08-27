@@ -5,32 +5,34 @@ import Filter from "./filter/Filter";
 import { v4 as uuidv4 } from "uuid";
 import { CSSTransition } from "react-transition-group";
 import styles from "./App.module.css";
+import Alert from "./Alert/Alert";
 
 export default class App extends Component {
   state = {
     contacts: [
-      {
-        id: "id-1",
-        name: "Rosie Simpson",
-        number: "459-12-56",
-      },
-      {
-        id: "id-2",
-        name: "Hermione Kline",
-        number: "443-89-12",
-      },
-      {
-        id: "id-3",
-        name: "Eden Clements",
-        number: "645-17-79",
-      },
-      {
-        id: "id-4",
-        name: "Annie Copeland",
-        number: "227-91-26",
-      },
+      // {
+      //   id: "id-1",
+      //   name: "Rosie Simpson",
+      //   number: "459-12-56",
+      // },
+      // {
+      //   id: "id-2",
+      //   name: "Hermione Kline",
+      //   number: "443-89-12",
+      // },
+      // {
+      //   id: "id-3",
+      //   name: "Eden Clements",
+      //   number: "645-17-79",
+      // },
+      // {
+      //   id: "id-4",
+      //   name: "Annie Copeland",
+      //   number: "227-91-26",
+      // },
     ],
     filter: "",
+    alert: false,
   };
 
   componentDidMount() {
@@ -60,7 +62,9 @@ export default class App extends Component {
         (contact) => contact.name.toLowerCase() === name.toLowerCase()
       )
     ) {
-      alert("The name is already exsist");
+      this.setState({ alert: true });
+      setTimeout(() => this.setState({ alert: false }), 1500);
+      // alert("The name is already exsist");
     } else {
       this.setState((prevState) => ({
         contacts: [
@@ -103,9 +107,10 @@ export default class App extends Component {
   };
 
   render() {
-    const { filter } = this.state;
+    const { contacts, filter, alert } = this.state;
     return (
       <>
+        <Alert alert={alert} />
         <CSSTransition
           in={true}
           timeout={500}
@@ -115,9 +120,10 @@ export default class App extends Component {
         >
           <p className={styles.sectionTitle}> Phonebook </p>
         </CSSTransition>
-
         <ContactForm addItem={this.addItem} />
-        <Filter filter={filter} getFilter={this.getFilter} />
+        {contacts.length > 1 && (
+          <Filter filter={filter} getFilter={this.getFilter} />
+        )}
         <ContactsList
           contacts={this.findContact()}
           deleteContact={this.deleteContact}
