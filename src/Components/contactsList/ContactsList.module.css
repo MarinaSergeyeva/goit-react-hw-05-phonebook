@@ -1,0 +1,13 @@
+.contactsList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.contactsListItem {
+  border-radius: 2px;
+  box-shadow: 0 0 5px rgb(197, 197, 197);
+  padding: 20px;
+  background-color: #fff;
+  margin-bottom: 10px;
+}
